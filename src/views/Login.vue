@@ -52,7 +52,9 @@
 </template>
 
 <script>
-  import $ from "jquery/dist/jquery.js"
+  import $ from "jquery/dist/jquery.js";
+  import { login } from '../api/index.js';
+
   var allow = 0;
   export default {
     mounted(){
@@ -145,22 +147,47 @@
       }
     },
     methods: {
-      login(){
+      async login(){
         if(0 == allow){
           return;
         }
         //const that = this;
-        this.$http.post(http+'/api/user/login', {account:this.account,password:this.password}).then(function({data: res}){
-          if('200' === res._code){
-            // 设置token，记录登录状态
 
-            window.sessionStorage.setItem('token', res._data.token.toString())
-            window.sessionStorage.setItem('userInfo', res._data.userInfo.toString())
-            location.href = "/main"  // 调转到admin路由
-          } else{
-            layui.use(['layer'], function(){layui.layer.msg('用户名或密码不正确')})
-          }
-        })
+        const result = await login({
+          account: this.account,
+          password: this.password,
+        });
+        //const that = this;
+        console.log(result);
+        if (result.data._code == 200) {
+          //this.$notify({ type: 'success', message: result.data._msg });
+          //localStorage.setItem('token', this.data._data.token);
+          //localStorage.setItem('password', this.token);
+          //this.$router.push('/home');
+          //console.log(localStorage);
+          // this.Toast('登录成功');
+          // 设置token，记录登录状态
+          console.log(result);
+          window.sessionStorage.setItem('token', result.data._data.token);
+          window.sessionStorage.setItem('userInfo', result.data._data.userInfo);
+          location.href = "/main"  // 调转到admin路由
+        } else {
+          layui.use(['layer'], function(){layui.layer.msg('用户名或密码不正确')})
+          // this.Toast('用户名或密码不正确')
+        }
+
+
+        // this.$http.post(http+'/api/user/login', {account:this.account,password:this.password}).then(function({data: res}){
+        //   if('200' === res._code){
+        //     // 设置token，记录登录状态
+        //
+        //     window.sessionStorage.setItem('token', res._data.token.toString())
+        //     window.sessionStorage.setItem('userInfo', res._data.userInfo.toString())
+        //     location.href = "/main"  // 调转到admin路由
+        //   } else{
+        //     layui.use(['layer'], function(){layui.layer.msg('用户名或密码不正确')})
+        //   }
+        // })
       }
     }
 

@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <NavBar :links="links" />
-    <v-content>
+    <v-content color="#DAD5D1">
       <router-view />
     </v-content>
     <Footer :links="links" />

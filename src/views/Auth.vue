@@ -21,11 +21,11 @@
 
 <script>
 import Login from '@/views/Login-o.vue'
-import Signup from '@/views/Signup.vue'
+//import Signup from '@/views/Signup.vue'
 export default {
   components: {
-    Login,
-    Signup
+    Login
+    //Signup
   },
   data() {
     return {

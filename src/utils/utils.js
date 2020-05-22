@@ -9,3 +9,7 @@ export function saveStatePlugin(store) {
     localStorage.setItem('board', JSON.stringify(state.board))
   )
 }
+
+export function getSession(key) {
+  return sessionStorage.getItem(key)
+}

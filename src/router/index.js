@@ -4,6 +4,8 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Main from '../views/Main.vue'
+import VoteInfo from '../components/VoteInfo.vue'
+import Vote from '../components/Vote.vue'
 
 Vue.use(VueRouter);
 
@@ -17,6 +19,11 @@ const routes = [
   //   component: admin
   // },
   {
+    path: '/test',
+    name: 'Test',
+    component: () => import("@/views/test")
+  },
+  {
     path: '/login',
     name: 'Login',
     component: Login
@@ -25,6 +32,11 @@ const routes = [
     path: '/register',
     name: 'Register',
     component: Register
+  },
+  {
+    path: '/vote',
+    name: 'Vote',
+    component: Vote
   },
   {
     path: '/main',
@@ -43,7 +55,8 @@ const routes = [
       {
         path: '/myVote',
         name: 'MyVote',
-        component: () => import('../views/MyVote.vue')
+        component: VoteInfo
+        //component: () => import('../views/MyVote.vue')
       },
       {
         path: '/voteHistory',

@@ -39,6 +39,7 @@
 </template>
 
 <script>
+  import { register } from '../api/index.js';
   export default{
     data(){
       return{
@@ -49,7 +50,7 @@
 
     },
     methods:{
-      register(){
+      async register(){
 
         const that = this;
         if(this.account.toString == '' || this.nickName.toString == null || this.password.toString == null || this.repassword.toString == null)
@@ -67,19 +68,38 @@
           icon: 16
           ,shade: 0.5
         });
+
+        const result = await register({
+          account: this.account,
+          password: this.password,
+          nickName: this.nickName,
+        });
+        //const that = this;
+        //console.log(result);
         //判断是否注册成功
-        that.$http.post(http+'/api/user/register', {account:this.account,password:this.password,nickName:this.nickName}).then(function({data: res}){
-          console.log(layui);
-          if('200' === res._code){
-            // window.sessionStorage.setItem('token', res._data.token.toString())
-            layui.use(['layer'], function(){layui.layer.msg(res._msg)})
-            layer.closeAll('loading');
-            that.$router.push("/login")
-          } else{
-            layui.use(['layer'], function(){layui.layer.msg(res._msg)})
-            layer.closeAll('loading');
-          }
-        })
+        if ('200' === result.data._code) {
+          // window.sessionStorage.setItem('token', res._data.token.toString())
+          layui.use(['layer'], function(){layui.layer.msg(res._msg)})
+          layer.closeAll('loading');
+          that.$router.push("/login")
+        } else {
+          layui.use(['layer'], function(){layui.layer.msg(res._msg)})
+          layer.closeAll('loading');
+        }
+
+        //判断是否注册成功
+        // that.$http.post(http+'/api/user/register', {account:this.account,password:this.password,nickName:this.nickName}).then(function({data: res}){
+        //   console.log(layui);
+        //   if('200' === res._code){
+        //     // window.sessionStorage.setItem('token', res._data.token.toString())
+        //     layui.use(['layer'], function(){layui.layer.msg(res._msg)})
+        //     layer.closeAll('loading');
+        //     that.$router.push("/login")
+        //   } else{
+        //     layui.use(['layer'], function(){layui.layer.msg(res._msg)})
+        //     layer.closeAll('loading');
+        //   }
+        // })
       }
     }
   }

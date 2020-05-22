@@ -9,7 +9,11 @@ import 'vant/lib/icon/local.css'
 import 'vant/lib/index.css'
 // import "layui-src/src/lay/modules/layer"
 import "layui-src/dist/css/layui.css"
+import { Search } from 'vant';
+import { Toast } from 'vant';
 
+Vue.use(Toast);
+Vue.use(Search);
 Vue.use(Icon);
 
 Vue.config.productionTip = false
